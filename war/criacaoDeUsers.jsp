@@ -1,4 +1,4 @@
-<%@page import="javax.jws.soap.SOAPBinding.Use"%>
+<%@ page import="javax.jws.soap.SOAPBinding.Use"%>
 <%@ page import="com.google.appengine.api.datastore.Query"%>
 <%@ page import="com.google.appengine.api.datastore.FetchOptions"%>
 <%@ page import="com.google.appengine.api.datastore.KeyFactory"%>
@@ -18,94 +18,177 @@
 <link rel="stylesheet" type="text/css" href="arquivos/myStyle.css" />
 <script type="text/javascript" src="arquivos/jquery-1.8.0.js"></script>
 <script type="text/javascript" src="arquivos/jqAnimations.js"></script>
+<script type="text/javascript" src="arquivos/jsScripts.js"></script>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Tour Guide!</title>
 </head>
 <body>
-	<!-- 	criacao de usuarios -->
-	<!-- 	Formulario de usuario -->
-	<form method="post" id="form1">
-		<table>
-			<tr>
-				<td>Nome <input type="text" name="txtNome">
-				</td>
-				<td>Senha <input type="password" name="passSenha">
-				</td>
-			</tr>
-		</table>
-		<div class="botao1"><a class="botao" href="#" name="envia"> Enviar</a></div>
-		<!--  	<input type="submit" value="Enviar" name="B1" /> 	 -->
+	<div id="painelSuperior">
+		<h1>Tour Guide</h1>
+		<div id="menu">
+			<div class="botao">
+				<a href="index.jsp">mapa</a>
+			</div>
+			<div class="botao">
+				<a href="criacaoDeCaminhos.jsp">minhas rotas</a>
+			</div>
 
-	</form>
-	<!-- 	Chamada do banco de dados -->
-	<%
-		String userS = "";
+			<div class="botao">
+				<a href="criacaoDeUsers.jsp">login</a>
+			</div>
+		</div>
+	</div>
+	<div id="pagina">
+		<div id="conteudo">
+			<div id="painelEsquerdo">
+				<br>
+				<div class="itemPai">Opcoes</div>
+				<img
+					src="https://developers.google.com/appengine/images/appengine-noborder-120x30.gif"
+					alt="Powered by Google App Engine" />
+			</div>
+			<div id="painelDireito">
+				<div class="conteudo">
+					<!-- 					fim do cabecalho -->
 
-		userS = session.toString();
 
-		userS = (String) session.getAttribute("sesNome");
+					<%
+						String userS = "";
+						String logout = "";
 
-		if (userS != null) {
-			if (!userS.equals("")) {
-				out.println("<div class=\"resposta\"><p>Ola " + userS
-						+ ", seja bem vindo ou Tour Guide</p></div>");
-			} 
-		}else {
-			out.println("<div class=\"resposta\"><p>Faca ou crie seu login</p></div>");
-		}
+						logout = request.getParameter("txtLogout");
+						userS = session.toString();
+						userS = (String) session.getAttribute("sesNome");
 
-		DatastoreService datastore = DatastoreServiceFactory
-				.getDatastoreService();
-		// 		out.print("<p>Conectado</p>");	
+						if (logout != null) {
+							if (logout.equals("logout")) {
+								userS = "";
+							}
+						}
 
-		Query query = new Query("Usuario").addSort("dataDeCriacao",
-				Query.SortDirection.DESCENDING);
-		List<Entity> users = datastore.prepare(query).asList(
-				FetchOptions.Builder.withDefaults());
+						if (userS != null) {
+							if (!userS.equals("")) {
+								out.println("<div class=\"hidden\">");
+							}
+						}
+					%>
+					<!-- 	criacao de usuarios -->
+					<!-- 	Formulario de usuario -->
+					<div class="form">
+						<form method="post" id="form1">
+							<table>
+								<tr>
+									<td>Nome <input type="text" name="txtNome">
+									</td>
+									<td>Senha <input type="password" name="passSenha">
+									</td>
+								</tr>
+							</table>
+							<div class="areaForm">
+								<div class="areaFormInt">
+									<div class="botao1">
+										<a class="botao" href="#" name="envia">Enviar</a>
+									</div>
+								</div>
+							</div>
+							<!--  	<input type="submit" value="Enviar" name="B1" /> 	 -->
+						</form>
+					</div>
 
-		String senha;
-		String nome;
-		boolean existe = false;
-		boolean valido = false;
+					<!-- 	Chamada do banco de dados -->
+					<%
+						if (userS != null) {
+							if (!userS.equals("")) {
+								out.println("</div>");
+							}
+						}
+						if (userS != null) {
+							if (!userS.equals("")) {
+								out.println("<div class=\"resposta\"><p>Ola " + userS
+										+ ", seja bem vindo(a) ou Tour Guide</p>");
+								out.println("<form method=\"post\" id=\"form1\">");
+								out.println("	<div class=\"areaFormInt\">");
+								out.println("		<div class=\"botao1\">");
+								out.println("			<input class=\"hidden\" type=\"text\" value=\"logout\" name=\"txtLogout\">");
+								out.println("			<a class=\"botao\" href=\"#\" name=\"envia\">Logout</a>");
+								out.println("		</div>");
+								out.println("	</div>");
+								out.println("</form></div>");
 
-		if (request.getParameter("txtNome") != null) {
+								// 				<!-- 				<div class="areaFormInt"> -->
+								// 				<!-- 					<div class="botao1"> -->
+								// 				<!-- 						<a class="botao" href="#" name="envia">Logout</a> -->
+								// 				<!-- 					</div> -->
+								// 				<!-- 				</div> -->
 
-			senha = request.getParameter("passSenha");
-			nome = request.getParameter("txtNome");
+							}
+						} else {
+							out.println("<div class=\"resposta\"><p>Faca ou crie seu login</p></div>");
+						}
 
-			Entity user = new Entity("Usuario");
+						DatastoreService datastore = DatastoreServiceFactory
+								.getDatastoreService();
+						// 		out.print("<p>Conectado</p>");	
 
-			user.setProperty("nome", nome);
-			user.setProperty("senha", senha);
+						Query query = new Query("Usuario").addSort("dataDeCriacao",
+								Query.SortDirection.DESCENDING);
+						List<Entity> users = datastore.prepare(query).asList(
+								FetchOptions.Builder.withDefaults());
 
-			Date dataCriacao = new Date();
-			user.setProperty("dataDeCriacao", dataCriacao);
+						String senha;
+						String nome;
+						boolean existe = false;
+						boolean valido = false;
 
-			//if (nomeF.equals(request.getParameter("txtNome")) {
-			//existe = true;
+						if (request.getParameter("txtNome") != null) {
 
-			for (Entity u : users) {
-				if (nome.equals(u.getProperty("nome"))) {
-					existe = true;
-					if (senha.equals(u.getProperty("senha")))
-						valido = true;
-					session.setAttribute("sesNome", nome);
-				}
-			}
-			if (!existe && !("").equals((String) user.getProperty("nome"))) {
-				datastore.put(user);
-				out.print("<div class=\"resposta\"><p>Usuario Cadastrado</p></div>");
-			} else {
-				if (valido) {
-					out.print("<div class=\"resposta\"><p>Usuario valido</p></div>");
-				} else {
-					out.print("<div class=\"resposta\"><p>Usuario e/ou senha Invalido(s)</p></div>");
-				}
-			}
-		}
-	%>
-	<!-- 	Fim de criacao de usuario -->
+							senha = request.getParameter("passSenha");
+							nome = request.getParameter("txtNome");
+
+							Entity user = new Entity("Usuario");
+
+							user.setProperty("nome", nome);
+							user.setProperty("senha", senha);
+
+							Date dataCriacao = new Date();
+							user.setProperty("dataDeCriacao", dataCriacao);
+
+							//if (nomeF.equals(request.getParameter("txtNome")) {
+							//existe = true;
+
+							for (Entity u : users) {
+								if (nome.equals(u.getProperty("nome"))) {
+									existe = true;
+									if (senha.equals(u.getProperty("senha")))
+										valido = true;
+									session.setAttribute("sesNome", nome);
+								}
+							}
+							if (!existe && !("").equals((String) user.getProperty("nome"))) {
+								datastore.put(user);
+								out.print("<div class=\"resposta\"><p>Usuario Cadastrado</p>");
+								out.println("</div>");
+							} else {
+								if (valido) {
+									out.println("<div class=\"resposta\"><p>Usuario valido</p>");
+									out.println("</div>");
+								} else {
+									out.print("<div class=\"resposta\"><p>Usuario e/ou senha Invalido(s)</p>");
+									out.println("</div>");
+								}
+							}
+						}
+					%>
+					<!-- 	Fim de criacao de usuario -->
+					<!-- 						inicio do footer -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="painelInferior">
+		<h4>Tecnologia de Programacao Aplicada 2</h4>
+	</div>
 
 </body>
 </html>
