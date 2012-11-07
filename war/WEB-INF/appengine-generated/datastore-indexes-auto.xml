@@ -1,8 +1,8 @@
-<!-- Indices written at Tue, 30 Oct 2012 20:49:38 BRST -->
+<!-- Indices written at Tue, 30 Oct 2012 21:39:52 BRST -->
 
 <datastore-indexes>
 
-    <!-- Used 1 time in query history -->
+    <!-- Used 28 times in query history -->
     <datastore-index kind="Caminho" ancestor="false" source="auto">
         <property name="dono" direction="asc"/>
         <property name="dataDeCriacao" direction="desc"/>

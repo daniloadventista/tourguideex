@@ -111,7 +111,8 @@
 				String partidaF = (String) cami.getProperty("partida");
 	%>
 	<b><%=partidaF%></b> Para:
-	<blockquote><%=chegadaF%></blockquote> <div class="botao">Excluir</div>
+	<i><%=chegadaF%></i> 
+	<div><a href=""><a class="">Excluir</a></div>
 	<%
 			}
 		}
