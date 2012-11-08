@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 
+<<<<<<< HEAD
 function atualisaConteudo() {
 	$(".conteudo").load('criacaoDeUsers.jsp');
 }
@@ -11,6 +12,14 @@ $(document).ready(function() {
 
 	$(".botao1").click(function() {
 		$("form#form1").submit();
+=======
+
+$(document).ready(function() {
+	
+	$(".botao1").click(function() {
+		$("form#form1").submit();
+
+>>>>>>> 35ded0a4534dbdcaddf8675b1c9f4cff16ab0027
 	});
 	$(".botao2").click(function() {
 		$("form#form2").submit();
@@ -20,16 +29,21 @@ $(document).ready(function() {
 		$(".filho").show(500);
 	});
 
+<<<<<<< HEAD
 	$(".filho").click(function() {
 		$(".filho").hide(500);
 	});
 	(".filho").mouseover(function() {
+=======
+	$(".filho").mouseover(function() {
+>>>>>>> 35ded0a4534dbdcaddf8675b1c9f4cff16ab0027
 		$(".descricao").show(500);
 	});
 	$(".descricao").click(function() {
 		$(".descricao").hide(500);
 	});
 });
+<<<<<<< HEAD
 
 /*
  * var mackImg = new google.maps.LatLng(40.740, -74.18); var imageBounds = new
@@ -126,3 +140,5 @@ $(document).ready(function() {
 // "http://www.lib.utexas.edu/maps/historical/newark_nj_1922.jpg",
 // imageBounds);
 // oldmap.setMap(map);
+=======
+>>>>>>> 35ded0a4534dbdcaddf8675b1c9f4cff16ab0027
